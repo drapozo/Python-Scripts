@@ -1,0 +1,48 @@
+def has_invalid_characters(domain):
+    valid = "abcdefghijklmnopqrstuvwxyz0123456789."
+    for i in domain:
+        if i not in valid:
+            return True
+    return False
+        
+def is_valid(email):
+    if email.count("@") != 1:
+        return False
+    email_list = email.split("@")
+    prefix = email_list[0]
+    domain = email_list[1]
+    if len(prefix) == 0:
+        return False
+    if domain.count(".") != 1:
+        return False
+    splitted_domain = domain.split(".")
+    domain_name = splitted_domain[0]
+    extension = splitted_domain[1]
+    if len(domain_name) == 0 or len(extension) == 0:
+        return False
+    if has_invalid_characters(prefix) == True or has_invalid_characters(domain) == True:
+        return False
+    return True
+
+emails = [
+    "test@example.com",
+    "valid@gmail.com",
+    "invalid@gmail",
+    "invalid",
+    "not an email",
+    "invalid@email",
+    "!@/",
+    "test@@example.com",
+    "test@.com",
+    "test@site.",
+    "@example.com",
+    "an.example@test",
+    "te#st@example.com",
+    "test@exam!ple.com"
+]
+
+for i in emails:
+    if is_valid(i) == True:
+        print(i + " is valid")
+    else:
+        print(i + " is invalid")
